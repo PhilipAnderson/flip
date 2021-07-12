@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"/>
+      <div class="content">
+        <div>
+          <h3>System Test Config</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Tone</th>
+                <th>Test Positions</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="config: ${systemTestConfigs}">
+                <td th:text="${config.name}">__NAME__</td>
+                <td th:text="${config.tone}">__TONE__</td>
+                <td th:text="${#strings.listJoin(config.testPositions, ',')}">__TEST_POSITIONS__</td>
+                <td><a th:href="@{/config/system-test/update/{id}(id=${config.id})}">Edit</a></td>
+                <td><a th:href="@{/config/delete/{id}(id=${config.id})}">Delete</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <a th:href="@{/config/system-test/create}">Create New</a>
+        </div>
+        <div>
+          <h3>Single Response Configs</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Image Position</th>
+                <th>Tone</th>
+                <th>Delay</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="config: ${singleResponseConfigs}">
+                <td th:text="${config.name}">__NAME__</td>
+                <td th:text="${config.image}">__IMAGE__</td>
+                <td th:text="${config.imagePosition}">__IMAGE_POSITION__</td>
+                <td th:text="${config.tone}">__TONE__</td>
+                <td th:text="${config.delay}">__DELAY__</td>
+                <td><a th:href="@{/config/single-response/update/{id}(id=${config.id})}">Edit</a></td>
+                <td><a th:href="@{/config/delete/{id}(id=${config.id})}">Delete</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <a th:href="@{/config/single-response/create}">Create New</a>
+        </div>
+
+        <div>
+          <h3>Remember Single Image Configs</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Images</th>
+                <th>Initial Image Position</th>
+                <th>Test Image Positions</th>
+                <th>Show Image Delay</th>
+                <th>Hide Image Delay</th>
+                <th>Passed Tone</th>
+                <th>Failed Tone</th>
+                <th>Delay Between Trials</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="config: ${rememberSingleImageConfigs}">
+                <td th:text="${config.name}">__NAME__</td>
+                <td th:text="${#strings.listJoin(config.images, ',')}">__IMAGES__</td>
+                <td th:text="${config.initialImagePosition}">__IMAGE_POSITION__</td>
+                <td th:text="${#strings.listJoin(config.testPositions, ',')}">__TEST_POSITIONS__</td>
+                <td th:text="${config.showImageDelay}">__SHOW_IMAGE_DELAY__</td>
+                <td th:text="${config.hideImageDelay}">__HIDE_IMAGE_DELAY__</td>
+                <td th:text="${config.passedTone}">__PASSED_TONE__</td>
+                <td th:text="${config.failedTone}">__FAILED_TONE__</td>
+                <td th:text="${config.delayBetweenTrials}">__DELAY_BETWEEN_TRIALS__</td>
+                <td><a th:href="@{/config/remember-single-image/update/{id}(id=${config.id})}">Edit</a></td>
+                <td><a th:href="@{/config/delete/{id}(id=${config.id})}">Delete</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <a th:href="@{/config/remember-single-image/create}">Create New</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

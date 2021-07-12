@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"/>
+      <div class="content">
+
+        <h2 th:if="${not updating}">Creating New Single Response Trial Configuration</h2>
+        <h2 th:if="${updating}">Editing Single Response Trial Configuration</h2>
+
+        <form
+          action="#"
+          method="post"
+          class="form-table"
+          th:action="${updating} ? @{/config/single-response/update/{id}(id=${singleResponseConfig.id})} : @{/config/single-response/create}"
+          th:object="${singleResponseConfig}"
+          >
+
+          <!-- name -->
+          <div class="form-row">
+            <label class="form-cell" for="name">Name</label>
+            <input class="form-cell" type="text" th:field="*{name}" id="name" placeholder="Name" th:readonly="${updating}">
+            <span  class="form-cell" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+          </div>
+
+          <!-- image -->
+          <div class="form-row">
+            <label class="form-cell" for="image">Image</label>
+            <input class="form-cell" type="text" th:field="*{image}" id="image" placeholder="Image">
+            <span  class="form-cell" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+          </div>
+
+          <!-- image position -->
+          <div class="form-row">
+            <label class="form-cell" for="imagePosition">Image Position</label>
+            <input class="form-cell" type="number" th:field="*{imagePosition}" id="imagePosition" placeholder="Image Position">
+            <span  class="form-cell" th:if="${#fields.hasErrors('imagePosition')}" th:errors="*{imagePosition}"></span>
+          </div>
+
+          <!-- tone -->
+          <th:block th:replace="config/forms/fragments/tone-input.html :: input('tone', 'Tone')"/>
+
+          <!-- final delay -->
+          <th:block th:replace="config/forms/fragments/delay-input.html :: input('delay', 'Delay Between Trials')"/>
+
+          <div class="form-row">
+            <input class="form-cell" type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

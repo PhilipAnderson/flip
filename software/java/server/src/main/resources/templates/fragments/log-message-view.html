@@ -1,0 +1,22 @@
+<div th:fragment="view (logMessage)">
+
+  <span th:text="${#temporals.format(logMessage.time, 'dd-MM-yyyy HH:mm')}"/>
+
+  <th:block th:switch="${logMessage.level}">
+    <pre th:case="'TRACE'" style="display: inline; background-color: #d66fd4;">TRACE</pre>
+    <pre th:case="'DEBUG'" style="display: inline; background-color: #6fbed6;">DEBUG</pre>
+    <pre th:case="'INFO'"  style="display: inline;"><span style="background-color: #4de29d;">INFO</span> </pre>
+    <pre th:case="'WARN'"  style="display: inline;"><span style="background-color: #f7f57b;">WARN</span> </pre>
+    <pre th:case="'ERROR'" style="display: inline; background-color: #f46558;">ERROR</pre>
+  </th:block>
+
+  <!-- <span th:text="${logMessage.level}"/> -->
+  <span th:text="${logMessage.flipBoxId}"/>
+
+  <span th:text="${logMessage.message}"/>
+
+  <details th:if="${logMessage.stackTrace != null}">
+    <summary>Stack Trace</summary>
+    <textarea readonly style="width: 100%; height: 100px; resize: none;" th:text="${logMessage.stackTrace}"/>
+  </details>
+</div>

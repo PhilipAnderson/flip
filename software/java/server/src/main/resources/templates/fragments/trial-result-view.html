@@ -1,0 +1,11 @@
+<div th:fragment="view (trialResult)">
+
+  <span th:text="${#temporals.format(trialResult.beginTime, 'dd-MM-yyyy HH:mm')}"/>
+  <span th:text="${trialResult.birdId}"/>
+
+  <th:block th:switch="${trialResult.state.toString()}">
+    <span th:case="'PASSED'"     th:text="${trialResult.state}" style="background-color: #8ff470;"/>
+    <span th:case="'FAILED'"     th:text="${trialResult.state}" style="background-color: #f77460;"/>
+    <span th:case="'INCOMPLETE'" th:text="${trialResult.state}" style="background-color: #60eff7;"/>
+  </th:block>
+</div>

@@ -1,0 +1,31 @@
+//
+
+plugins {
+    id 'java-library'
+}
+
+group = 'flip'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
+
+dependencies {
+
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.6'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+
+    implementation 'com.opencsv:opencsv:5.5'
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}

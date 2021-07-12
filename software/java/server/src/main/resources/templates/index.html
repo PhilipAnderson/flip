@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"></div>
+      <div class="content">
+        <h3>Recent Trial Results</h3>
+        <div th:if="${recentTrialResults.empty}">
+          There are no recent trial results available.
+        </div>
+        <div class="mono">
+          <div th:each="trialResult : ${recentTrialResults}">
+            <div th:replace="fragments/trial-result-view.html :: view(${trialResult})"/>
+          </div>
+        </div>
+      </div>
+      <div class="content-grow">
+        <h3>Recent Log Messages</h3>
+        <div th:if="${recentLogMessages.empty}">
+          There are no recent log messages available.
+        </div>
+        <div class="mono">
+          <div th:each="logMessage : ${recentLogMessages}">
+            <div th:replace="fragments/log-message-view.html :: view(${logMessage})"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

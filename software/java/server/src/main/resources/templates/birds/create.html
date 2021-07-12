@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"/>
+      <div class="content">
+        <h2>Registering New Bird</h2>
+        <form
+          action="#"
+          method="post"
+          class="form-table"
+          th:action="@{/birds/create}"
+          th:object="${bird}"
+          >
+
+          <div class="form-row">
+            <label class="form-cell" for="friendlyName">Friendly Name</label>
+            <input class="form-cell" type="text" th:field="*{friendlyName}" id="friendlyName" placeholder="Friendly Name">
+            <span  class="form-cell" th:if="${#fields.hasErrors('friendlyName')}" th:errors="*{friendlyName}"></span>
+          </div>
+
+          <div class="form-row">
+            <label class="form-cell" for="tagId">RFID Tag Id</label>
+            <input class="form-cell" type="text" th:field="*{tagId}" id="tagId" placeholder="RFID Tag Id">
+            <span  class="form-cell" th:if="${#fields.hasErrors('tagId')}" th:errors="*{tagId}"></span>
+          </div>
+
+          <div class="form-row">
+            <label class="form-cell" for="trialConfig">Trial Config</label>
+            <select class="form-cell" th:field="*{trialConfig}" id="trialConfig">
+              <option th:each="aTrialConfig : ${trialConfigs}" th:value="${aTrialConfig.id}">
+                <span th:text="${aTrialConfig.name}"/>
+              </option>
+            </select>
+            <span class="form-cell" th:if="${#fields.hasErrors('trialConfig')}" th:errors="*{trialConfig}"></span>
+          </div>
+
+          <div class="form-row">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

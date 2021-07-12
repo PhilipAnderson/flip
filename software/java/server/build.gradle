@@ -1,0 +1,77 @@
+//
+
+plugins {
+	id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	// id "com.diffplug.spotless" version "5.12.4"
+
+
+	// id "nebula.lint" version "16.17.0"
+	
+	// id "com.github.node-gradle.node" version "2.2.4"
+	// id 'org.hidetake.ssh' version '2.10.1'
+}
+
+group = 'flip'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+// gradleLint.rules = ['all-dependency']
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+// spotless {
+// 	java {
+// 		importOrder('java', 'javax', 'flip', '')
+// 		removeUnusedImports()
+// 	}
+// }
+
+task reload(type: Copy) {
+	from 'src/main/resources'
+	into 'build/resources/main'
+	include 'static/**'
+	include 'templates/**'
+	include 'custom/**'
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'com.jcabi:jcabi-ssh:1.6.1'
+	implementation 'com.opencsv:opencsv:5.5'
+
+	implementation project(':common')
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+
+test {
+	useJUnitPlatform()
+}

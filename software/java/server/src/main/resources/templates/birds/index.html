@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>FLIP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"></div>
+      <div class="content">
+        <h3>Registered Birds</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Friendly Name</th>
+              <th>RFID Tag Id</th>
+              <th>Trial Config</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="bird : ${birds}">
+              <td th:text="${bird.friendlyName}">__FRIENDLY_NAME__</td>
+              <td th:text="${bird.tagId}">__TAG_ID__</td>
+              <td th:text="${bird.trialConfig.name}">__TRIAL_CONFIG__</td>
+              <td><a th:href="@{/birds/update/{id}(id=${bird.id})}">Edit</a></td>
+              <td><a th:href="@{/birds/delete/{id}(id=${bird.id})}">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <a th:href="@{/birds/create}">Create New</a>
+      </div>
+    </div>
+  </body>
+</html>

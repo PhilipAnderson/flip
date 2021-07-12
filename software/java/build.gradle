@@ -1,0 +1,8 @@
+// We need a build.gradle in the root even though there is nothing to build as buildscript repositories can only be configured here.
+// See https://github.com/diffplug/spotless/issues/795
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}

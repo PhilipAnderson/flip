@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"/>
+      <div class="content">
+        <h2 th:if="${not updating}">Creating New System Test Trial Configuration</h2>
+        <h2 th:if="${updating}">Editing System Test Trial Configuration</h2>
+        <form
+          action="#"
+          method="post"
+          class="form-table"
+          th:action="${updating} ? @{/config/system-test/update/{id}(id=${systemTestConfig.id})} : @{/config/system-test/create}"
+          th:object="${systemTestConfig}"
+          >
+
+          <!-- name -->
+          <div class="form-row">
+            <label class="form-cell" for="name">Name</label>
+            <input class="form-cell" type="text" th:field="*{name}" id="name" placeholder="Name" th:readonly="${updating}">
+            <span  class="form-cell" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+          </div>
+
+          <!-- test positions list -->
+          <div class="form-row">
+            <label class="form-cell" for="testPositions">Test Positions</label>
+            <div class="form-cell" id="testPositions">
+
+              <div id="testPositionTemplate" style="display: none;" disabled>
+                <input class="padd" type="number"/>
+              </div>
+
+              <div id="testPositionsContainer">
+                <div th:each="position, stat : *{testPositions}">
+                  <input class="padd" type="number"
+                         th:field="*{testPositions[__${stat.index}__]}"
+                         th:placeholder="'Test Position ' + ${stat.index}"
+                         />
+                </div>
+              </div>
+              <div>
+                <input class="padd" type="button" value="Append" id="testPositionsAppendButton"/>
+                <input class="padd" type="button" value="Remove" id="testPositionsRemoveButton"/>
+              </div>
+            </div>
+            <span class="form-cell" th:if="${#fields.hasErrors('testPositions')}" th:errors="*{testPositions}"></span>
+          </div>
+
+          <!-- tone -->
+          <th:block th:replace="config/forms/fragments/tone-input.html :: input('tone', 'Tone')"/>
+
+          <div class="form-row">
+            <input class="form-cell" type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+
+    document.getElementById('testPositionsAppendButton').addEventListener('click', event => {
+
+        const container = document.getElementById('testPositionsContainer');
+
+        const ind = container.children.length;
+        const row = document.getElementById('testPositionTemplate').cloneNode(true);
+
+        row.removeAttribute('id');
+        row.removeAttribute('disabled');
+        row.removeAttribute('style');
+
+        const input = row.querySelector('input');
+        
+        input.setAttribute('id', 'testPositions' + ind);
+        input.setAttribute('name', 'testPositions[' + ind + ']');
+        input.setAttribute('placeholder', 'Test Position ' + ind);
+
+        container.append(row);
+    });
+
+    document.getElementById('testPositionsRemoveButton').addEventListener('click', event => {
+        const container = document.getElementById('testPositionsContainer');
+
+        if (container.children.length > 1) {
+            container.children.item(container.children.length - 1).remove();
+        }
+    });
+
+  </script>
+</html>

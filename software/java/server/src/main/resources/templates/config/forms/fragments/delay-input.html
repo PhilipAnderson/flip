@@ -1,0 +1,128 @@
+<th:block th:fragment="input(propertyName, label)">
+
+  <div class="form-row">
+    <label class="form-cell" th:text="${label}"/>
+    <input class="form-cell" type="text" disabled/>
+  </div>
+
+  <div class="form-row">
+    <label  class="form-cell" th:for="${propertyName} + '.delayType'">Type</label>
+    <select class="form-cell" th:field="*{__${propertyName}__.type}" th:id="${propertyName} + '.delayType'">
+      <option value="NONE">None</option>
+      <option value="FIXED">Fixed</option>
+      <option value="RANDOM_NORMAL">Random Normal</option>
+      <option value="RANDOM_UNIFORM">Random Uniform</option>
+    </select>
+    <span class="form-cell" th:if="${#fields.hasErrors(propertyName + '.type')}" th:errors="*{__${propertyName}__.type}"></span>
+  </div>
+
+  <div class="form-row" th:id="${propertyName} + '.fixedValueRow'">
+    <label class="form-cell" th:for="${propertyName} + '.fixedValueRow'">Value (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.fixedValue}"
+           th:id="${propertyName} + '.fixedValue'"
+           placeholder="Value"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.fixedValue')}"
+           th:errors="*{__${propertyName}__.fixedValue}"
+           />
+  </div>
+
+  <div class="form-row" th:id="${propertyName} + '.randomNormalMeanRow'">
+    <label class="form-cell" th:for="${propertyName} + '.randomNormalMeanRow'">Mean (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.randomNormalMean}"
+           th:id="${propertyName} + '.randomNormalMean'"
+           placeholder="Mean"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.randomNormalMean')}"
+           th:errors="*{__${propertyName}__.randomNormalMean}"
+           />
+  </div>
+
+  <div class="form-row" th:id="${propertyName} + '.randomNormalStdDevRow'">
+    <label class="form-cell" th:for="${propertyName} + '.randomNormalStdDevRow'">Standard Deviation (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.randomNormalStdDev}"
+           th:id="${propertyName} + '.randomNormalStdDev'"
+           placeholder="Standard Deviation"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.randomNormalStdDev')}"
+           th:errors="*{__${propertyName}__.randomNormalStdDev}"
+           />
+  </div>
+
+  <div class="form-row" th:id="${propertyName} + '.randomUniformMinRow'">
+    <label class="form-cell" th:for="${propertyName} + '.randomUniformMinRow'">Minimum (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.randomUniformMin}"
+           th:id="${propertyName} + '.randomUniformMin'"
+           placeholder="Minimum"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.randomUniformMin')}"
+           th:errors="*{__${propertyName}__.randomUniformMin}"
+           />
+  </div>
+
+  <div class="form-row" th:id="${propertyName} + '.randomUniformMaxRow'">
+    <label class="form-cell" th:for="${propertyName} + '.randomUniformMaxRow'">Maximum (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.randomUniformMax}"
+           th:id="${propertyName} + '.randomUniformMax'"
+           placeholder="Maximum"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.randomUniformMax')}"
+           th:errors="*{__${propertyName}__.randomUniformMax}"
+           />
+  </div>
+
+  <script th:inline="javascript">
+
+    (() => {
+        const propertyId = (name) => [[${propertyName}]] + '.' + name;
+        const propertyElement = (name) => document.getElementById(propertyId(name));
+
+        const typeRows = new Map([
+            ['NONE',           []],
+            ['FIXED',          [propertyElement('fixedValueRow')]],
+            ['RANDOM_NORMAL',  [propertyElement('randomNormalMeanRow'), propertyElement('randomNormalStdDevRow')]],
+            ['RANDOM_UNIFORM', [propertyElement('randomUniformMinRow'), propertyElement('randomUniformMaxRow')]]
+        ]);
+
+        const typeSelector = propertyElement('delayType');
+
+        const typeUpdater = (type) => {
+
+            typeRows.forEach((rows, _type_key) => {
+                rows.forEach(row => {
+                    row.style.display = 'none';
+                    for (let input of row.getElementsByTagName('input')) {
+                        input.setAttribute('disabled', '');
+                    }
+                });
+            });
+
+            typeRows.get(type).forEach(row => {
+                row.style.display = 'table-row';
+                for (let input of row.getElementsByTagName('input')) {
+                    input.removeAttribute('disabled');
+                }
+            });
+        };
+        
+        typeSelector.addEventListener('change', (event) => typeUpdater(event.target.value));
+        typeUpdater(typeSelector.value);
+    })();
+    
+  </script>
+</th:block>

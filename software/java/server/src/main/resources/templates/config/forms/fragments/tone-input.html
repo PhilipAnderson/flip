@@ -1,0 +1,34 @@
+<th:block th:fragment="input(propertyName, label)">
+
+  <div class="form-row">
+    <label class="form-cell" th:text="${label}"/>
+    <input class="form-cell" type="text" disabled/>
+  </div>
+
+  <div class="form-row">
+    <label class="form-cell" th:for="${propertyName} + '.frequency'">Frequency (hz)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.frequency}"
+           th:id="${propertyName} + '.frequency'"
+           placeholder="Tone Frequency"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.frequency')}"
+           th:errors="*{__${propertyName}__.frequency}"
+           />
+  </div>
+  <div class="form-row">
+    <label class="form-cell" th:for="${propertyName} + '.duration'">Duration (ms)</label>
+    <input class="form-cell"
+           type="number"
+           th:field="*{__${propertyName}__.duration}"
+           th:id="${propertyName} + '.duration'"
+           placeholder="Tone Duration"
+           >
+    <span  class="form-cell"
+           th:if="${#fields.hasErrors(propertyName + '.duration')}"
+           th:errors="*{__${propertyName}__.duration}"
+           />
+  </div>
+</th:block>

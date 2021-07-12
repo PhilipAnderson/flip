@@ -1,0 +1,114 @@
+//
+
+plugins {
+
+	id 'java'
+	id "com.diffplug.spotless" version "5.12.4"
+	id 'org.springframework.boot' version '2.3.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.openjfx.javafxplugin' version '0.0.8'
+	// id 'org.hidetake.ssh' version '2.10.1'
+}
+
+group = 'flip'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+javafx {
+	version = "11"
+	modules = [ 'javafx.controls', 'javafx.media' ]
+}
+
+repositories {
+	mavenCentral()
+}
+
+// spotless {
+// 	java {
+// 		importOrder('java', 'javax', 'flip', '')
+// 		removeUnusedImports()
+// 	}
+// }
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'com.github.ben-manes.caffeine:caffeine'
+	implementation 'com.fazecast:jSerialComm:2.6.2'
+	implementation 'javax.persistence:javax.persistence-api'
+	implementation project(':common')
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+
+	// testImplementation('org.springframework.boot:spring-boot-starter-test') {
+	// 	exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	// }
+	// testImplementation 'io.projectreactor:reactor-test'
+}
+
+// test {
+// 	useJUnitPlatform()
+// }
+
+// tasks.withType(JavaCompile) {
+// 	options.compilerArgs << '-Xlint:unchecked'
+// 	options.deprecation = true
+// }
+
+// remotes {
+// 	flip_0001 {
+// 		role('flip-box')
+// 		host = '172.20.76.44'
+// 		user = 'flip'
+// 		identity = file('/home/philip/.ssh/flip/id_rsa.flip')
+// 	}
+// 	flip_0002 {
+// 		role('flip-box')
+// 		host = '172.20.76.47'
+// 		user = 'flip'
+// 		identity = file('/home/philip/.ssh/flip/id_rsa.flip')
+// 	}
+// 	flip_0003 {
+// 		role('flip-box')
+// 		host = '172.20.76.48'
+// 		user = 'flip'
+// 		identity = file('/home/philip/.ssh/flip/id_rsa.flip')
+// 	}
+// }
+
+// task sync_image_library {
+// 	doLast {
+// 		ssh.run {
+// 			session(remotes.role('flip-box')) {
+// 				put from: "$rootDir/library", into: "/home/flip/.flip"
+// 			}
+// 		}
+// 	}
+// }
+
+// task sync_firmware {
+// 	doLast {
+// 		ssh.run {
+// 			session(remotes.role('flip-box')) {
+// 				put from: "$rootDir/../../firmware", into: "/home/flip/.flip", filter: { !(it =~ /\.pio/) }
+// 			}
+// 		}
+// 	}
+// }
+
+// task sync_flip_jar {
+// 	doLast {
+// 		ssh.run {
+// 			session(remotes.role('flip-box')) {
+// 				put from: "$buildDir/libs/raspberry-0.0.1-SNAPSHOT.jar", into: "/home/flip/.flip"
+// 			}
+// 		}
+// 	}
+// }

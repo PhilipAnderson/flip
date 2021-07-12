@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+  <head th:replace="fragments/head.html"/>
+  <body>
+    <div class="box">
+      <div th:replace="fragments/sidebar.html"/>
+      <div class="content">
+
+        <h3>Manually Dispense Corn</h3>
+        <form th:action="@{/manual-dispense/flip-0001}" method="post" class="form-table">
+          <div class="form-row"><input type="submit" value="flip-0001"></div>
+        </form>
+        <form th:action="@{/manual-dispense/flip-0002}" method="post" class="form-table">
+          <div class="form-row"><input type="submit" value="flip-0002"></div>
+        </form>
+        <form th:action="@{/manual-dispense/flip-0003}" method="post" class="form-table">
+          <div class="form-row"><input type="submit" value="flip-0003"></div>
+        </form>
+
+        <h3>Download Trial Results</h3>
+        <form action="#" th:action="@{/trial-results/download}" method="post" class="form-table">
+          <div class="form-row">
+            <label class="form-cell" for="type">Type</label>
+            <!-- <input class="form-cell" type="text" name="type" id="type"> -->
+            <select class="form-cell" name="type" id="type">
+              <option value="system-test">System Test</option>
+              <option value="single-response">Single Response</option>
+            </select>
+          </div>
+          <p>
+            Chrome has a date-time input, on Firefox these may appear as just text inputs, it uses ISO date-time formats, i.e. 2021-09-29T13:05
+          </p>
+          <div class="form-row">
+            <label class="form-cell" for="from">From</label>
+            <input class="form-cell" type="datetime-local" name="from" id="from">
+          </div>
+          <div class="form-row">
+            <label class="form-cell" for="until">Until</label>
+            <input class="form-cell" type="datetime-local" name="until" id="until">
+          </div>
+          <div class="form-row">
+            <input type="submit" value="download">
+          </div>
+        </form>
+
+        <h3>Create New User</h3>
+        <form
+          action="#"
+          method="post"
+          class="form-table"
+          th:action="@{/users}"
+          >
+          <div class="form-row">
+            <label class="form-cell" for="username">Username</label>
+            <input class="form-cell" type="text" id="username" name="username" placeholder="Username">
+          </div>
+
+          <div class="form-row">
+            <label class="form-cell" for="password">Password</label>
+            <input class="form-cell" type="password" id="password" name="password" placeholder="Password">
+          </div>
+
+          <div class="form-row">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
